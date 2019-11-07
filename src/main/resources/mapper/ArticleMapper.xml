@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.diary.main.mapper.ArticleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.diary.main.model.Article">
+            <id column="id" property="id" />
+            <result column="title" property="title" />
+            <result column="url" property="url" />
+            <result column="content" property="content" />
+            <result column="html" property="html" />
+            <result column="edit" property="edit" />
+            <result column="dateb" property="dateb" />
+            <result column="original" property="original" />
+            <result column="comments" property="comments" />
+            <result column="reading" property="reading" />
+            <result column="top" property="top" />
+            <result column="status" property="status" />
+            <result column="create_time" property="createTime" />
+            <result column="update_time" property="updateTime" />
+    </resultMap>
+
+
+
+
+
+    <resultMap id="ArticleListMap" extends="BaseResultMap" type="com.diary.main.model.Article">
+            <collection property="dynamicTags" ofType="Tag" select="getTag" column="id"></collection>
+            <collection property="type" ofType="Type" select="getTypeByArId" column="id"></collection>
+    </resultMap>
+
+
+    <!--<resultMap id="BlogMap"  type="com.diary.main.es.model.ArticleEs">-->
+        <!--<collection property="dynamicTags" ofType="Tag" select="getTag" column="id"></collection>-->
+        <!--<collection property="type" ofType="Type" select="getTypeNameByArId" column="id"></collection>-->
+    <!--</resultMap>-->
+
+
+    <resultMap id="EsArticleList" type="com.diary.main.es.model.ArticleEs">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="html" property="html" />
+        <result column="dateb" property="dateb" />
+        <result column="status" property="status" />
+        <collection property="tag" ofType="String" select="getTag" column="id"></collection>
+        <collection property="type" ofType="String" select="getTypeNameByArId" column="id"></collection>
+    </resultMap>
+
+
+
+
+    <!--private  Integer id;-->
+    <!--private  String name;-->
+    <!--private  String url;-->
+    <!--private  String icon;-->
+    <select id="getMenus" resultType="com.diary.main.vo.MenuVo">
+        select id ,title as name ,url,icon from sys_article where status=1 and page=1
+    </select>
+
+
+    <select id="findBlogTop" resultMap="EsArticleList">
+         select id,title,html,dateb,status,original,top from sys_article where status=1 and top=1
+    </select>
+
+    <!--<resultMap id="findListSearch" extends="BaseResultMap" type="com.diary.main.model.Article">-->
+            <!--<collection property="type" ofType="Integer"  column="id">-->
+                <!--<result property="tyid" column="tyid"/>-->
+            <!--</collection>-->
+    <!--</resultMap>-->
+
+
+    <select id="findBlogById" resultMap="EsArticleList" parameterType="int">
+       select id,title,html,dateb,status,original,top,comments,reading from sys_article where  id=#{id}
+    </select>
+
+
+    <select id="findBlogPageById" resultMap="EsArticleList" parameterType="String">
+    select * from(
+        select 1 as orderId,id,title,html,dateb,status,original,top,comments,reading from sys_article where  id=#{id}
+        union all
+        select 2 as orderId,id,title,html,dateb,status,original,top,comments,reading from sys_article where  url=#{id}
+        ) as tab order by  orderId limit 1
+    </select>
+
+
+
+
+    <select id="getTypeNameByArId" parameterType="int" resultType="String">
+        select  t.name as name from sys_type_and_article art join sys_type t  on t.id=art.tyid
+        where art.arid=#{arid}
+    </select>
+
+
+
+
+    <select id="findListSearch" resultType="com.diary.main.vo.ArticleVo" parameterType="com.diary.main.vo.SearchVo">
+    select h.id,h.title,h.dateb,h.reading,group_concat(t.tname SEPARATOR ' , ')  as type,h.status as status
+            from sys_article h left join
+            (select st.name as tname,ta.arid from  sys_type_and_article ta  join sys_type st on ta.tyid=st.id  )
+            as t on h.id=t.arid where 1=1
+            <if test="title!=null and title !='' ">
+                and title like "%"#{title}"%"
+            </if>
+            group by h.id
+    </select>
+
+
+    <select id="getArticleList" resultMap="ArticleListMap" parameterType="int">
+      select * from sys_article where id=#{id}
+    </select>
+
+
+    <!--<select id="BlogDetailById" resultMap="BlogMap" parameterType="int">-->
+        <!--select * from sys_article where id=#{id}-->
+    <!--</select>-->
+
+
+
+    <select id="getNextBlogId" parameterType="int" resultType="com.diary.main.vo.ArticleVo">
+        select id,title from sys_article where page=0 and dateb
+        &lt;(select dateb from sys_article where   id=#{id} limit 1) order by dateb desc  limit 1
+    </select>
+
+    <select id="getOnBlogId" parameterType="int" resultType="com.diary.main.vo.ArticleVo">
+        select id,title from sys_article where  page=0 and dateb
+        &gt;(select dateb from sys_article where  id=#{id} limit 1) order by dateb    limit 1
+    </select>
+
+
+
+    <select id="getTag" parameterType="int" resultType="String">
+        select t.name from sys_tag t  where t.arid=#{id}
+    </select>
+
+    <select id="getTypeByArId" parameterType="int" resultType="int">
+        select  t.id as id from sys_type_and_article art join sys_type t  on t.id=art.tyid
+          where art.arid=#{arid}
+    </select>
+
+    <update id="updateReadingById" >
+        update sys_article set reading=#{reading} where id=#{id}
+    </update>
+
+
+    <!--<select id="getTypeByArId" parameterType="int" resultType="int">-->
+        <!--select  t.id as id from sys_type_and_article art join sys_type t  on t.id=art.tyid-->
+        <!--where art.arid=#{arid}-->
+    <!--</select>-->
+
+    <!--BlogDetail-->
+
+
+
+    <!--<select id="getTypeNameByArId" parameterType="int" resultType="String">-->
+        <!--select  t.name as name from sys_type_and_article art join sys_type t  on t.id=art.tyid-->
+        <!--where art.arid=#{arid}-->
+    <!--</select>-->
+
+
+
+
+
+
+
+
+
+</mapper>

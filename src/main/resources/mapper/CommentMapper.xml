@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.diary.main.mapper.CommentMapper">
+
+
+    <resultMap id="BaseResultMap" type="com.diary.main.vo.CommentVo">
+        <id column="id" property="id" />
+        <result column="arid" property="arid" />
+        <result column="name" property="name" />
+        <result column="email" property="email" />
+        <result column="is_author" property="isAuthor" />
+        <result column="content" property="content" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+    <!-- 通用查询映射结果 -->
+    <resultMap id="CommentResultMap" extends="BaseResultMap" type="com.diary.main.vo.CommentVo">
+        <collection property="children" ofType="com.diary.main.vo.CommentVo" select="getChilds" column="id"></collection>
+    </resultMap>
+
+
+    <select id="getCommentsByArId" resultMap="CommentResultMap">
+        select id,arid,name,email,is_author,content,create_time from   sys_comment where   parent_id = 0 and arid=#{arid}
+        order by create_time desc
+    </select>
+
+
+    <select id="getChilds" parameterType="int" resultType="com.diary.main.vo.CommentVo">
+            select id,arid,name,email,content,is_author,parent_id,create_time from sys_comment where parent_id=#{id}
+    </select>
+
+
+
+
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, arid, parent_id AS parentId, name, email, content, create_time AS createTime, update_time AS updateTime
+    </sql>
+
+
+
+
+
+
+
+
+
+</mapper>

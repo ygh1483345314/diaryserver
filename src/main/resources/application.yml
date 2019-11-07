@@ -1,0 +1,4 @@
+spring:
+  profiles:
+    active: dev
+    #prod 投产环境  dev 开发环境

@@ -1,0 +1,76 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 123456
+    url: jdbc:mysql://127.0.0.1/diary?characterEncoding=utf-8&useSSL=false
+    type: com.alibaba.druid.pool.DruidDataSource
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  data:
+    elasticsearch:
+      cluster-name: es
+      cluster-nodes: 127.0.0.1:9300
+      repositories:
+        enabled: true
+  cache:
+    type: redis
+    redis:
+       time-to-live: 24h #缓存超时时间
+       cache-null-values: false #是否缓存空值
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    jedis:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+    timeout: 2000ms
+    password: 123456
+
+# 七牛云配置
+# bucket是创建的存储空间名
+# path对应存储空间的访问域名
+qiniu:
+  accessKey: accessKey
+  secretKey: secretKey
+  bucket: file
+  path: http://xxxxxxx.bkt.clouddn.com
+
+swagger2:
+  enable: false #开发环境 开放API
+
+server:
+  port: 8031
+  servlet:
+    context-path: /api
+#
+jwt:
+  expiration: 60 #60分钟到期
+  refresh: 20 #剩余 20分钟 重新签证
+  secret: hellosmcmkx23xcxz63bbgjhjxxsbnm   #密匙
+
+mybatis-plus:
+# 如果是放在src/main/java目录下 classpath:/com/yourpackage/*/mapper/*Mapper.xml
+  # 如果是放在resource目录 classpath:/mapper/*Mapper.xml
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.diary.main.model
+  global-config:
+    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+    id-type: 0
+    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+    field-strategy: 1
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    #配置JdbcTypeForNull
+    jdbc-type-for-null: 'null'
+
+logging:
+  config: classpath:logging-config.xml
+
+
