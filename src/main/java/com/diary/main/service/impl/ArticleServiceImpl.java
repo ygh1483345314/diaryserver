@@ -12,15 +12,20 @@ import com.diary.main.mapper.ArticleMapper;
 import com.diary.main.model.Tag;
 import com.diary.main.model.Type;
 import com.diary.main.model.TypeAndArticle;
+import com.diary.main.redis.ArticleKey;
+import com.diary.main.redis.BaseRedisKey;
+import com.diary.main.redis.KeyPrefix;
 import com.diary.main.service.*;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.diary.main.vo.ArticleVo;
 import com.diary.main.vo.MenuVo;
 import com.diary.main.vo.SearchVo;
+import com.google.gson.Gson;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -30,6 +35,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 
 import java.util.*;
@@ -166,15 +172,29 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
 
-    @Cacheable(key = "'article_'+#id")
+//    @Cacheable(key = "'article_'+#id")
     @Override
     @ApiOperation(value = "查询文章",notes ="根据ID查询文章" )
     @ApiImplicitParam(name = "id", value = "id", required = true, dataType = "Integer")
     public Map BlogPage(String id) {
         //查询数据
-        ArticleEs article= articleMapper.findBlogPageById(id);
+        ArticleEs article=null;
         HashMap<String,Object> map=new HashMap<>();
+//        Gson gson=new Gson();
+//        BaseRedisKey<Article> keyPrefix =new  ArticleKey("article_"+id,24,TimeUnit.HOURS,Article.class);
+//        String keyStr=diaryRedisCacheManager.get(keyPrefix.getPrefix());
+//        if(!StringUtils.isEmpty(keyStr)){
+////            Article article2=keyPrefix.getStrtoBean(keyStr);
+////            BeanUtils.copyProperties(article2,article);
+//            article=gson.fromJson(keyStr,ArticleEs.class);
+//            map.put("article", article);
+//            return  map;
+//        }
+        article= articleMapper.findBlogPageById(id);
         map.put("article", article);
+//        String value=gson.toJson(map);
+//        System.out.println(value);
+//        diaryRedisCacheManager.insert(keyPrefix.getPrefix(),value,keyPrefix.expireSeconds(),keyPrefix.getTimeUnit());
         return map;
     }
 
@@ -190,6 +210,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Transactional
     @Caching(evict = {
             @CacheEvict(key = "'article_'+#article2.id"),   /*后端管理 对象缓存*/
+            @CacheEvict(key = "'article_'+#article2.url"),   /*后端管理 对象缓存*/
             @CacheEvict(key = "'type_all'"),
             @CacheEvict(key = "'tag_all'"),
             @CacheEvict(key = "'pageList'"),
@@ -217,6 +238,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         List<String> tags=article2.getDynamicTags();
         saveBatchTypeAndTag(typeList,tags,article2.getId());
         //保存到es中
+        if(article.getPage()==1){
+            return  article.getId();
+        }
         ArticleEs articleEs1=saveEs(article);
         log.info("修改文章成功 elasticsearch 修改成功 articleEs={}",articleEs1);
         return  article.getId();
@@ -257,12 +281,21 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
 
+
     @Override
     @ApiOperation(value = "删除文章",notes = "根据传入ID，删除文章。")
     @ApiImplicitParam(name = "id", value = "id", required = true, dataType = "Integer")
     @Transactional
+    public Article deleteArticle(Integer id) {
+        Article article=selectById(id);
+        delArticle(article);
+        return  article;
+    }
+
+    @Override
     @Caching(evict = {
-            @CacheEvict(key = "'article_'+#id"),   /*后端管理 对象缓存*/
+            @CacheEvict(key = "'article_'+#article.id"),   /*后端管理 对象缓存*/
+            @CacheEvict(key = "'article_'+#article.url"),   /*后端管理 对象缓存*/
 //            @CacheEvict(key = "'blog'+#id"),        /**前端页面 对象缓存*/
             @CacheEvict(key = "'type_all'"),
             @CacheEvict(key = "'tag_all'"),
@@ -271,19 +304,16 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             @CacheEvict(key = "'menus'"),
             @CacheEvict(value="articleTop", key="'articleTop'"),
     })
-    public void deleteArticle(Integer id) {
-        Article article=selectById(id);
-//        if(article==null){
-//            log.error("文章不存在，ID={}",id);
-//            throw new DiaryException(MsgEnum.NOT_ARTICLE);
-//        }
+    public Article delArticle(Article article) {
         if(article!=null){
             deleteTypeAndTag(article);
             deleteById(article.getId());
-            commentService.deleteCommentByarid(id);
+            commentService.deleteCommentByarid(article.getId());
         }
-        articleEsService.delete(String.valueOf(id));
+
+        articleEsService.delete(String.valueOf(article.getId()));
         log.info("删除文章成功 elasticsearch 删除成功 articleEs={}",article);
+        return article;
     }
 
     @Override
@@ -321,7 +351,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    @Cacheable(key = "'pageList'",unless = "#result == null")
+//    @Cacheable(key = "'pageList'",unless = "#result == null")
     public List<Article> selectListPages() {
         Wrapper<Article> wrapper=new EntityWrapper();
         wrapper.eq("page","1");

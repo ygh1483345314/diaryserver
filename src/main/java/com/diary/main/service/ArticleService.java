@@ -28,7 +28,8 @@ public interface ArticleService extends IService<Article> {
     Map BlogPage(String id);
     Integer updateArticle(Article article);
     void saveBatchTypeAndTag(Set<Integer> typeList,List<String> tags,Integer arid);
-    void deleteArticle(Integer id);
+    Article deleteArticle(Integer id);
+    public Article delArticle(Article article);
     void deleteTypeAndTag(Article article);
     org.springframework.data.domain.Page<ArticleEs> findListSearch(SearchVo searchVo, Pageable pageable);
     Integer findCountBlog();
