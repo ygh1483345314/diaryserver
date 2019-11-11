@@ -18,7 +18,7 @@
     </resultMap>
 
     <select id="findAllType" resultMap="ResultType">
-        select ty.id,ty.name,count(1)as qty  from sys_type  ty left join  sys_type_and_article ar on ar.tyid=ty.id group by ty.id;
+        select ty.id,ty.name,count(ar.id)as qty  from sys_type  ty left join  sys_type_and_article ar on ar.tyid=ty.id group by ty.id;
     </select>
 
     <!-- 通用查询结果列 -->

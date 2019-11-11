@@ -65,6 +65,7 @@ public class TypeServiceImpl extends ServiceImpl<TypeMapper, Type> implements Ty
     @Override
     @ApiOperation(value = "新增类别",notes = "新增类别")
     @ApiImplicitParam(name = "type", value = "type 实体类对象", required = true, dataType = "Type")
+    @CacheEvict(key = "'type_all'")
     @Transactional
     public Boolean saveType(Type type) {
         if(!checkType(type)){

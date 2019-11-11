@@ -1,5 +1,5 @@
 
-use diarytest;
+use diary;
 #用户表
 create table `sys_user` (
     `id` int not null auto_increment COMMENT 'userID自增ID',
@@ -9,6 +9,10 @@ create table `sys_user` (
     `update_time` timestamp not null default current_timestamp on update current_timestamp comment '修改时间',
     primary key (`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+
+insert into sys_user(username,password)values('root','4QrcOUm6Wau+VuBX8g+IPg==');
+
+
 
 
 #文章表

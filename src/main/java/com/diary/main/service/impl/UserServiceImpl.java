@@ -29,7 +29,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public User findUserByNameAndPass(User user) {
 
-//Qpf0SxOVUjUkWySXOZ16kw==
+//4QrcOUm6Wau+VuBX8g+IPg==
         String newPassword=new BASE64Encoder().encode(DigestUtils.md5Digest(user.getPassword().getBytes()));
         user.setPassword(newPassword);
         User user1=userMapper.findUserByNameAndPass(user);
