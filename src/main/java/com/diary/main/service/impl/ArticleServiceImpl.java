@@ -51,10 +51,10 @@ import static java.util.stream.Collectors.joining;
  * @author hao
  * @since 2019-09-14
  */
+@CacheConfig(cacheNames = "article")
 @Service
 @Api(tags = "文章模块service层")
 @Slf4j
-@CacheConfig(cacheNames = "article")
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
 
     @Autowired
@@ -92,11 +92,11 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @ApiImplicitParam(name = "article", value = "article 实体类对象", required = true, dataType = "Article")
 //    @CacheEvict(key = "'articleCount'")
     @Caching(evict = {
-            @CacheEvict(key = "'type_all'"),
-            @CacheEvict(key = "'tag_all'"),
-            @CacheEvict(key = "'pageList'"),
-            @CacheEvict(key = "'menus'"),
-            @CacheEvict(key = "'articleCount'")
+            @CacheEvict(cacheNames = "type",key = "'type_all'"),
+            @CacheEvict(cacheNames = "tag",key = "'tag_all'"),
+            @CacheEvict(cacheNames = "article",key = "'pageList'"),
+            @CacheEvict(cacheNames = "article",key = "'menus'"),
+            @CacheEvict(cacheNames = "article",key = "'articleCount'")
     })
     @Transactional
     public Integer saveArticle(Article article) {
@@ -155,7 +155,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
 
-    @Cacheable(key = "'article_'+#id")
+    @Cacheable(cacheNames = "article",key = "'article_'+#id")
     @Override
     @ApiOperation(value = "查询文章",notes ="根据ID查询文章" )
     @ApiImplicitParam(name = "id", value = "id", required = true, dataType = "Integer")
@@ -199,23 +199,18 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
 
-
-
-
-
-
     @Override
     @ApiOperation(value = "修改文章",notes = "根据传入通过验证的实体类对象保存，到数据库中。")
     @ApiImplicitParam(name = "article", value = "article 实体类对象", required = true, dataType = "Article")
     @Transactional
     @Caching(evict = {
-            @CacheEvict(key = "'article_'+#article2.id"),   /*后端管理 对象缓存*/
-            @CacheEvict(key = "'article_'+#article2.url"),   /*后端管理 对象缓存*/
-            @CacheEvict(key = "'type_all'"),
-            @CacheEvict(key = "'tag_all'"),
-            @CacheEvict(key = "'pageList'"),
-            @CacheEvict(key = "'menus'"),
-            @CacheEvict(value="articleTop", key="'articleTop'")
+            @CacheEvict(cacheNames = "article",key = "'article_'+#article2.id"),   /*后端管理 对象缓存*/
+            @CacheEvict(cacheNames = "article",key = "'article_'+#article2.url"),   /*后端管理 对象缓存*/
+            @CacheEvict(cacheNames = "type",key = "'type_all'"),
+            @CacheEvict(cacheNames = "tag",key = "'tag_all'"),
+            @CacheEvict(cacheNames = "article",key = "'pageList'"),
+            @CacheEvict(cacheNames = "article",key = "'menus'"),
+            @CacheEvict(cacheNames = "article", key="'articleTop'")
                 })
     public Integer updateArticle(Article article2) {
         Article article=selectById(article2.getId());
@@ -294,15 +289,15 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Override
     @Caching(evict = {
-            @CacheEvict(key = "'article_'+#article.id"),   /*后端管理 对象缓存*/
-            @CacheEvict(key = "'article_'+#article.url"),   /*后端管理 对象缓存*/
+            @CacheEvict(cacheNames = "article",key = "'article_'+#article.id"),   /*后端管理 对象缓存*/
+            @CacheEvict(cacheNames = "article",key = "'article_'+#article.url"),   /*后端管理 对象缓存*/
 //            @CacheEvict(key = "'blog'+#id"),        /**前端页面 对象缓存*/
-            @CacheEvict(key = "'type_all'"),
-            @CacheEvict(key = "'tag_all'"),
-            @CacheEvict(key = "'articleCount'"),
-            @CacheEvict(key = "'pageList'"),
-            @CacheEvict(key = "'menus'"),
-            @CacheEvict(value="articleTop", key="'articleTop'"),
+            @CacheEvict(cacheNames = "type",key = "'type_all'"),
+            @CacheEvict(cacheNames = "tag",key = "'tag_all'"),
+            @CacheEvict(cacheNames = "article",key = "'articleCount'"),
+            @CacheEvict(cacheNames = "article",key = "'pageList'"),
+            @CacheEvict(cacheNames = "article",key = "'menus'"),
+            @CacheEvict(cacheNames = "article", key="'articleTop'"),
     })
     public Article delArticle(Article article) {
         if(article!=null){
@@ -333,7 +328,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    @Cacheable(key = "'articleCount'")
+    @Cacheable(cacheNames = "article",key = "'articleCount'")
     public Integer findCountBlog() {
         Wrapper<Article> wrapper=new EntityWrapper();
         wrapper.eq("status",1);
@@ -359,7 +354,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    @Cacheable(key = "'menus'")
+    @Cacheable(cacheNames = "article",key = "'menus'")
     public List<MenuVo> getMenus() {
         return articleMapper.getMenus();
     }

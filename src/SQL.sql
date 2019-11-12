@@ -8,7 +8,7 @@ create table `sys_user` (
     `create_time` timestamp not null default current_timestamp comment '创建时间',
     `update_time` timestamp not null default current_timestamp on update current_timestamp comment '修改时间',
     primary key (`id`)
-)ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 
 insert into sys_user(username,password)values('root','4QrcOUm6Wau+VuBX8g+IPg==');
 
@@ -34,7 +34,7 @@ create table `sys_article` (
     `create_time` timestamp not null default current_timestamp comment '创建时间',
     `update_time` timestamp not null default current_timestamp on update current_timestamp comment '修改时间',
     primary key (`id`)
-)ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 
 
 #标签表
@@ -45,7 +45,7 @@ create table `sys_tag` (
     `create_time` timestamp not null default current_timestamp comment '创建时间',
     `update_time` timestamp not null default current_timestamp on update current_timestamp comment '修改时间',
     primary key (`id`)
-)ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 
 
 ALTER table sys_tag ADD INDEX indexarid(arid);
@@ -58,7 +58,7 @@ create table `sys_type` (
     `create_time` timestamp not null default current_timestamp comment '创建时间',
     `update_time` timestamp not null default current_timestamp on update current_timestamp comment '修改时间',
     primary key (`id`)
-)ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 
 
 #类型表 文章映射表
@@ -69,7 +69,7 @@ create table `sys_type_and_article` (
     `create_time` timestamp not null default current_timestamp comment '创建时间',
     `update_time` timestamp not null default current_timestamp on update current_timestamp comment '修改时间',
     primary key (`id`)
-)ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 
 
 #博客评论表
@@ -84,7 +84,7 @@ create table `sys_comment` (
     `create_time` timestamp not null default current_timestamp comment '创建时间',
     `update_time` timestamp not null default current_timestamp on update current_timestamp comment '修改时间',
     primary key (`id`)
-)ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 
 ALTER table sys_comment ADD INDEX indexarid(arid);
 ALTER table sys_comment ADD INDEX indexparentid(parent_id);
@@ -99,7 +99,7 @@ create table `sys_image_file` (
     `create_time` timestamp not null default current_timestamp comment '创建时间',
     `update_time` timestamp not null default current_timestamp on update current_timestamp comment '修改时间',
     primary key (`id`)
-)ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 ALTER table sys_image_file ADD INDEX indexkey(key_id);
 
 
