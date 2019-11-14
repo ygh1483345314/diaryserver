@@ -92,10 +92,14 @@ public class ImageFileController {
     @RequestMapping(value ="{keyid}",method =RequestMethod.DELETE)
     @ApiOperation(value="删除附件", notes="删除附件。")
     @ApiImplicitParam(name = "keyid", value = "keyid", required = false, dataType = "String")
-    public ResultVo del(@RequestBody @PathVariable("keyid")String keyid) throws IOException {
-        Response response = qiniuFileConfig.bucketManager().delete(constantQiniu.getBucket(),keyid);
-        DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
-//        String delid=putRet.key;
+    public ResultVo del(@RequestBody @PathVariable("keyid")String keyid){
+        Response response=null;
+        try {
+             response = qiniuFileConfig.bucketManager().delete(constantQiniu.getBucket(),keyid);
+            DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
+        }catch (QiniuException e){
+            log.error("七牛云删除图片异常:error={}",e.getMessage());
+        }
         Wrapper<ImageFile> wrapper=new EntityWrapper<>();
         wrapper.eq("key_id",keyid);
         imageFileService.delete(wrapper);

@@ -4,6 +4,7 @@ spring:
     username: root
     password: 123456
     url: jdbc:mysql://127.0.0.1/diary?characterEncoding=utf-8&useSSL=false
+#    url: jdbc:mysql://127.0.0.1/diary?characterEncoding=utf-8&useSSL=false
     type: com.alibaba.druid.pool.DruidDataSource
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
@@ -30,6 +31,25 @@ spring:
         min-idle: 0
     timeout: 2000ms
     password: 123456
+  mail:
+    host: smtp.qq.com
+    username: 123@qq.com
+    password: lwdpvtvtccwejfhd
+    default-encoding: utf-8
+    to: 456@qq.com #默认接收邮箱
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    # 消费者配置
+    listener:
+      simple:
+        max-concurrency: 10 #消费者最大数量
+        concurrency: 5 #消费者最小数量
+        acknowledge-mode: manual
+        prefetch: 1 # 指定一个请求能处理多少个消息，如果有事务的话，必须大于等于transaction数量.
 
 # 七牛云配置
 # bucket是创建的存储空间名
@@ -37,11 +57,11 @@ spring:
 qiniu:
   accessKey: accessKey
   secretKey: secretKey
-  bucket: file
-  path: http://xxxxxxx.bkt.clouddn.com
+  bucket: file-server
+  path: ****.com
 
 swagger2:
-  enable: false #开发环境 开放API
+  enable: false #生产环境 关闭API
 
 server:
   port: 8031
@@ -72,5 +92,3 @@ mybatis-plus:
 
 logging:
   config: classpath:logging-config.xml
-
-
