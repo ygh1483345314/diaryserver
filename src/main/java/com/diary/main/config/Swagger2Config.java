@@ -37,9 +37,9 @@ public class Swagger2Config {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("diary 博客 API文档")
-                .description("更多相关文章请关注：http://blog.didispace.com/")
-                .termsOfServiceUrl("http://blog.didispace.com/")
-                .contact("叶生")
+                .description("更多相关文章请关注：https://www.yeblog.club/#/Home")
+                .termsOfServiceUrl("https://www.yeblog.club/#/Home")
+                .contact("YeHao")
                 .version("1.0")
                 .build();
     }

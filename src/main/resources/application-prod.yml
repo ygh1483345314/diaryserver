@@ -43,13 +43,16 @@ spring:
     username: guest
     password: guest
     virtual-host: /
-    # 消费者配置
+#     消费者配置
     listener:
-      simple:
-        max-concurrency: 10 #消费者最大数量
-        concurrency: 5 #消费者最小数量
-        acknowledge-mode: manual
-        prefetch: 1 # 指定一个请求能处理多少个消息，如果有事务的话，必须大于等于transaction数量.
+        simple:
+            retry:
+            ####开启消费者重试
+              enabled: true
+             ####最大重试次数
+              max-attempts: 5
+            ####重试间隔次数
+              initial-interval: 3000ms
 
 # 七牛云配置
 # bucket是创建的存储空间名

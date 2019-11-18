@@ -21,6 +21,7 @@ public enum MsgEnum {
     DELETE_TYPE_ERROR("50005","该类别下已有文章，必须先删除文章。","error"),
     ERROR("50006","网络异常","error"),//网络异常，万能错误。
 
+    CONSUMER_ERROR("50007","RabbmitMQ消费者程序异常","error"),
     NOT_File("40406","文件不能为空","error"),
     NEWDATA_SUCCESS("200","",""),
     SUCCESS("200","操作成功.","success");

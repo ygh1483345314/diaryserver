@@ -2,6 +2,7 @@ package com.diary.main.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.diary.main.config.RabbitConfig;
 import com.diary.main.enums.MsgEnum;
 import com.diary.main.exception.DiaryException;
 import com.diary.main.model.Comment;
@@ -11,6 +12,7 @@ import com.diary.main.model.Type;
 import com.diary.main.service.CommentService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.diary.main.service.EmailService;
+import com.diary.main.service.FanoutProducerService;
 import com.diary.main.vo.CommentMessageVo;
 import com.diary.main.vo.CommentVo;
 import com.google.common.reflect.TypeToken;
@@ -42,11 +44,12 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     @Autowired
     private  CommentMapper commentMapper;
 
-    @Autowired
-    private EmailService emailService;
 
     @Autowired
     private EmailModel emailModel;
+
+    @Autowired
+    private FanoutProducerService fanoutProducerService;
 
 
     @Override
@@ -74,10 +77,11 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         for (CommentMessageVo c:commentMessageVoList) {
             contentBuffer.append(c.getContentToStr());
         }
-        emailModel.setContent(comment.getName()+"||"+comment.getEmail()+" : "+contentBuffer);
-        emailService.sendEmailMessage(emailModel);
-
-
+        String msg=comment.getName()+"||"+comment.getEmail()+" : "+contentBuffer;
+        emailModel.setContent(msg);
+        String msgStr=gson.toJson(emailModel);
+        fanoutProducerService.send(RabbitConfig.FANOUT_EMAIL_QUEUE, msgStr);
+//        emailService.sendEmailMessage(emailModel);
         commentMapper.insert(comment);
     }
 
