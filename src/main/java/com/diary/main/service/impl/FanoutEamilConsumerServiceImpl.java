@@ -26,7 +26,6 @@ public class FanoutEamilConsumerServiceImpl implements FanoutEamilConsumerServic
     public void process(String msg) {
         log.info("邮件队列开始发送............msg={}", msg);
         try {
-            log.info("邮件队列尝试发送............msg={}", msg);
             Gson gson=new Gson();
             EmailModel emailModel=gson.fromJson(msg, EmailModel.class);
             emailService.sendEmailMessage(emailModel);
@@ -35,6 +34,5 @@ public class FanoutEamilConsumerServiceImpl implements FanoutEamilConsumerServic
             log.error("邮件队列消费者程序异常", e.getMessage());
             throw  new DiaryException(MsgEnum.CONSUMER_ERROR);
         }
-//        System.out.println(msg);
     }
 }

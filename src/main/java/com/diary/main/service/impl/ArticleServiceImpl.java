@@ -332,6 +332,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     public Integer findCountBlog() {
         Wrapper<Article> wrapper=new EntityWrapper();
         wrapper.eq("status",1);
+        wrapper.eq("page",0);
         return articleMapper.selectCount(wrapper);
     }
 
