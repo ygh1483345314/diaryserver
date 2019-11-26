@@ -4,6 +4,7 @@ spring:
     username: root
     password: 123456
     url: jdbc:mysql://127.0.0.1/diary?characterEncoding=utf-8&useSSL=false
+#    url: jdbc:mysql://127.0.0.1/diary?characterEncoding=utf-8&useSSL=false
     type: com.alibaba.druid.pool.DruidDataSource
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
@@ -30,6 +31,28 @@ spring:
         min-idle: 0
     timeout: 2000ms
     password: 123456
+  mail:
+    host: smtp.qq.com
+    username: 123@qq.com
+    password: lwdpvtvtccwejfhd
+    default-encoding: utf-8
+    to: 456@qq.com #默认接收邮箱
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+#     消费者配置
+    listener:
+        simple:
+            retry:
+            ####开启消费者重试
+              enabled: true
+             ####最大重试次数
+              max-attempts: 5
+            ####重试间隔次数
+              initial-interval: 3000ms
 
 # 七牛云配置
 # bucket是创建的存储空间名
@@ -37,11 +60,11 @@ spring:
 qiniu:
   accessKey: accessKey
   secretKey: secretKey
-  bucket: file
-  path: http://xxxxxxx.bkt.clouddn.com
+  bucket: file-server
+  path: ****.com
 
 swagger2:
-  enable: true #开发环境 开放API
+  enable: false #生产环境 关闭API
 
 server:
   port: 8031
@@ -74,3 +97,12 @@ logging:
   config: classpath:logging-config.xml
 
 
+#为了让百度爬虫快速收录本站，后台推送百度站长数据。
+baidu:
+   server: www.***.com #平台站点
+   serverList: #你想被收录的页面 集合
+       - www.***.com/#/Home
+       - www.***.com/#/Taglist
+       - www.***.com/#/Archives
+   url: http://data.zz.baidu.com/urls
+   token: abc
