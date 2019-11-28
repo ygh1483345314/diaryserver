@@ -18,8 +18,8 @@ import org.springframework.web.client.RestTemplate;
 
 @Slf4j
 @Component
-@Configuration
-@EnableScheduling
+//@Configuration
+//@EnableScheduling
 public  class  BaiDuSend  {
     @Autowired
     private BaiduConfig baiduConfig;
@@ -32,9 +32,9 @@ public  class  BaiDuSend  {
         headers.add("Content-Length", "83");
         headers.add("Content-Type", "text/plain");
     }
-//    每10秒发送一次百度推送
-    @Scheduled(fixedRate=10000)
-    public void sendPost(){
+////    每10秒发送一次百度推送
+//    @Scheduled(fixedRate=10000)
+    public String sendPost(){
         String api_url = baiduConfig.getUrlToken();
         StringBuffer urlBuffer = new StringBuffer();
         for (String url : baiduConfig.getServerList()) {
@@ -45,6 +45,7 @@ public  class  BaiDuSend  {
         String result = restTemplate.postForObject(api_url, entity, String.class);
         System.out.println("------------------------------------------------------------------------------");
         log.info("实时推送百度收录的回执：{}",result);
+        return  result;
     }
 
 }

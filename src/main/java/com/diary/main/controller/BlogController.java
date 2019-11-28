@@ -13,6 +13,7 @@ import com.diary.main.service.ArticleService;
 import com.diary.main.service.TagService;
 import com.diary.main.service.TypeService;
 import com.diary.main.service.impl.BaseBlogCount;
+import com.diary.main.utils.BaiDuSend;
 import com.diary.main.vo.MenuVo;
 import com.diary.main.vo.ResultVo;
 import com.diary.main.vo.SearchVo;
@@ -43,7 +44,8 @@ public class BlogController {
     private ArticleService articleService;
     @Autowired
     private BaseBlogCount blogCountImpl;
-
+    @Autowired
+    private BaiDuSend baiDuSend;
 
     @PassToken
     @RequestMapping(value = "/bolgList",method = RequestMethod.POST)
@@ -147,7 +149,12 @@ public class BlogController {
         return  ResultVo.GETDATA_SUCCESS(menus);
     }
 
-
+    @RequestMapping("/baidu")
+    @PassToken
+    @ApiOperation(value="发送百度实时推送", notes="发送百度实时推送")
+    public ResultVo sendBaidu(){
+       return ResultVo.SUCCESS("200","发送成功",baiDuSend.sendPost());
+    }
 
 //    public Map<String,Integer> getOldCountQtyById(String blogCountByid){
 //        Map<String,Integer>map=new HashMap<>();

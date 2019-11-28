@@ -22,9 +22,9 @@ import java.util.Map;
 
 @Slf4j
 public class AuthenticationInterceptor implements HandlerInterceptor {
-
-    @Autowired
-    private UserService userService;
+//
+//    @Autowired
+//    private UserService userService;
 
     @Autowired
     private TokenService tokenService;
@@ -79,6 +79,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
+
 
     }
 
