@@ -1,15 +1,11 @@
 package com.diary.main.es.model;
-
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.DateFormat;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
-
 import java.io.Serializable;
-import java.nio.file.attribute.FileTime;
 import java.util.Date;
 import java.util.List;
 
@@ -33,6 +29,8 @@ public class ArticleEs implements Serializable {
     private String original;
     private  String top;
     private  String comments;
+//    @Field(ignoreFields = {})
+//    @Field(type=FieldType.Text)
     private  Integer reading;
 
 
