@@ -33,7 +33,6 @@ public class ArticleEs implements Serializable {
     private String original;
     private  String top;
     private  String comments;
-    @Field(ignoreFields = {})
     private  Integer reading;
 
 

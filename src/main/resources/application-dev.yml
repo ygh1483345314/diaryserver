@@ -2,8 +2,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
-    password: 123456
-    url: jdbc:mysql://127.0.0.1/diary?characterEncoding=utf-8&useSSL=false
+    password: ygh1936705930
+    url: jdbc:mysql://117.48.227.211/diary?characterEncoding=utf-8&useSSL=false
 #    url: jdbc:mysql://127.0.0.1/diary?characterEncoding=utf-8&useSSL=false
     type: com.alibaba.druid.pool.DruidDataSource
   jackson:
@@ -12,17 +12,17 @@ spring:
   data:
     elasticsearch:
       cluster-name: es
-      cluster-nodes: 127.0.0.1:9300
+      cluster-nodes: 117.48.227.211:9300
       repositories:
         enabled: true
   cache:
     type: redis
     redis:
-       time-to-live: 24h #缓存超时时间
+       time-to-live: 2h #缓存超时时间
        cache-null-values: false #是否缓存空值
   redis:
     database: 0
-    host: 127.0.0.1
+    host: 117.48.227.211
     port: 6379
     jedis:
       pool:
@@ -30,15 +30,15 @@ spring:
         max-idle: 8
         min-idle: 0
     timeout: 2000ms
-    password: 123456
+    password: ygh1936705930
   mail:
     host: smtp.qq.com
-    username: 123@qq.com
+    username: 1483345314@qq.com
     password: lwdpvtvtccwejfhd
     default-encoding: utf-8
-    to: 456@qq.com #默认接收邮箱
+    to: 1936705930@qq.com #默认接收邮箱
   rabbitmq:
-    host: 127.0.0.1
+    host: 117.48.227.211
     port: 5672
     username: guest
     password: guest
@@ -54,14 +54,15 @@ spring:
             ####重试间隔次数
               initial-interval: 3000ms
 
+
 # 七牛云配置
 # bucket是创建的存储空间名
 # path对应存储空间的访问域名
 qiniu:
-  accessKey: accessKey
-  secretKey: secretKey
-  bucket: file-server
-  path: ****.com
+  accessKey: ZrCMAv_-Oyp3NpMVtLp3kYtc_gfpRsQtXAjULqod
+  secretKey: TTIJgjprDi0vj0NpazFOQLnVmYxrLb6ofGGFfuXO
+  bucket: ye-file-server
+  path: http://img.yeblog.club
 
 swagger2:
   enable: false #生产环境 关闭API
@@ -95,6 +96,7 @@ mybatis-plus:
 
 logging:
   config: classpath:logging-config.xml
+
 
 
 #为了让百度爬虫快速收录本站，后台推送百度站长数据。
