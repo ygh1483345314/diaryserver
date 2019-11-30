@@ -49,10 +49,14 @@
 
 
 
-    <!--private  Integer id;-->
-    <!--private  String name;-->
-    <!--private  String url;-->
-    <!--private  String icon;-->
+    <update id="updateEntity">
+        update  sys_article set entry=1 where entry=0 and status=1
+    </update>
+
+    <select id="findListByStatusAndEntry" resultType="int">
+        select id from  sys_article where status=1 and entry=0
+    </select>
+
     <select id="getMenus" resultType="com.diary.main.vo.MenuVo">
         select id ,title as name ,url,icon from sys_article where status=1 and page=1
     </select>

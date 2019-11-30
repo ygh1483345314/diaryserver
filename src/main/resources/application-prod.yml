@@ -100,9 +100,5 @@ logging:
 #为了让百度爬虫快速收录本站，后台推送百度站长数据。
 baidu:
    server: www.***.com #平台站点
-   serverList: #你想被收录的页面 集合
-       - www.***.com/#/Home
-       - www.***.com/#/Taglist
-       - www.***.com/#/Archives
    url: http://data.zz.baidu.com/urls
    token: abc

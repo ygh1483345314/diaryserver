@@ -360,5 +360,14 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return articleMapper.getMenus();
     }
 
+    @Override
+    public List<Integer> findListByStatusAndEntry() {
+        return  articleMapper.findListByStatusAndEntry();
+    }
+    @Override
+    public void updateEntity() {
+          articleMapper.updateEntity();
+    }
+
 
 }

@@ -37,5 +37,7 @@ public interface ArticleService extends IService<Article> {
     void updateReadingById(Integer reading,Integer id);
     List<Article> selectListPages();
     List<MenuVo> getMenus();
+    List<Integer> findListByStatusAndEntry();
+    void updateEntity();
 //    ArticleEs getArticleEs(Integer id);
 }

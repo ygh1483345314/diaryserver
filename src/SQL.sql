@@ -12,9 +12,6 @@ create table `sys_user` (
 
 insert into sys_user(username,password)values('root','4QrcOUm6Wau+VuBX8g+IPg==');
 
-
-
-
 #文章表
 create table `sys_article` (
     `id` int not null auto_increment COMMENT '自增ID',
@@ -36,6 +33,7 @@ create table `sys_article` (
     primary key (`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 
+alter table sys_article add  entry int(1) default 0 comment '百度事实推送,0为未推送,1相反';
 
 #标签表
 create table `sys_tag` (

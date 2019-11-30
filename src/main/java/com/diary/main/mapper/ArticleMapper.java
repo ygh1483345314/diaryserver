@@ -43,5 +43,9 @@ public interface ArticleMapper extends BaseMapper<Article> {
 
   List<MenuVo> getMenus();
 
+  List<Integer> findListByStatusAndEntry();
+
+  void updateEntity();
+
 //  ArticleVo BlogDetailById(Integer id);
 }

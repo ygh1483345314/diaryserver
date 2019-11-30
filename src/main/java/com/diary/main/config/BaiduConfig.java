@@ -12,11 +12,9 @@ import java.util.List;
 @Configuration
 @Data
 public class BaiduConfig {
-    private List<String> serverList;
     private String url;
     private  String token;
     private  String server;
-
     public String getUrlToken(){
        return  this.url+"?site="+this.server+"&token="+this.token;
     }
