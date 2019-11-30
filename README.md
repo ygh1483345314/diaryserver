@@ -14,7 +14,7 @@
 #  服务端配置
 >  需要先安装mysql5.7+Elasticsearch 6.3.2+redis+rabbitmq 
 ## 表创建
-> 创建数据库diary  执行项目文件中SQL.sql 文件中sql语句 注意 要把mysql中默认字符集改成utf8mb4 不然保存表情会报错.
+> 创建数据库diary  执行项目文件中SQL.sql 文件中sql语句(一切以实际项目中sql文件微注,下文仅供参考) 注意 要把mysql中默认字符集改成utf8mb4 不然保存表情会报错.
 ```
 use diary;
 #用户表
