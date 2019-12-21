@@ -121,12 +121,12 @@
 
 
     <select id="getNextBlogId" parameterType="int" resultType="com.diary.main.vo.ArticleVo">
-        select id,title from sys_article where page=0 and dateb
+        select id,title from sys_article where page=0 and status=1 and dateb
         &lt;(select dateb from sys_article where   id=#{id} and status=1 limit 1) order by dateb desc  limit 1
     </select>
 
     <select id="getOnBlogId" parameterType="int" resultType="com.diary.main.vo.ArticleVo">
-        select id,title from sys_article where  page=0 and dateb
+        select id,title from sys_article where  page=0 and status=1 and  dateb
         &gt;(select dateb from sys_article where  id=#{id} and status=1 limit 1) order by dateb    limit 1
     </select>
 
