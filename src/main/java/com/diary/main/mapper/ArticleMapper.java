@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.diary.main.es.model.ArticleEs;
 import com.diary.main.model.Article;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.diary.main.model.ArticleModel;
 import com.diary.main.vo.ArticleVo;
 import com.diary.main.vo.MenuVo;
 import com.diary.main.vo.SearchVo;
@@ -47,5 +48,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
 
   void updateEntity();
 
+  ArticleModel selectArticleModelAndTagsById(Integer id);
+  List<ArticleModel> selectArticleModelListAndTagsById();
 //  ArticleVo BlogDetailById(Integer id);
 }

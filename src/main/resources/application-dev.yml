@@ -15,6 +15,7 @@ spring:
       cluster-nodes: 117.48.227.211:9300
       repositories:
         enabled: true
+
   cache:
     type: redis
     redis:
@@ -71,6 +72,8 @@ server:
   port: 8031
   servlet:
     context-path: /api
+  tomcat:
+    basedir: .
 #
 jwt:
   expiration: 60 #60分钟到期
@@ -101,6 +104,6 @@ logging:
 
 #为了让百度爬虫快速收录本站，后台推送百度站长数据。
 baidu:
-   server: www.***.com #平台站点
+   server: www.yeblog.club #平台站点
    url: http://data.zz.baidu.com/urls
-   token: abc
+   token: glTOJpp37Wn94q6q

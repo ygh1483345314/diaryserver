@@ -3,6 +3,7 @@ package com.diary.main.service;
 import com.diary.main.es.model.ArticleEs;
 import com.diary.main.model.Article;
 import com.baomidou.mybatisplus.service.IService;
+import com.diary.main.model.ArticleModel;
 import com.diary.main.vo.MenuVo;
 import com.diary.main.vo.SearchVo;
 import org.springframework.data.domain.Pageable;
@@ -39,5 +40,8 @@ public interface ArticleService extends IService<Article> {
     List<MenuVo> getMenus();
     List<Integer> findListByStatusAndEntry();
     void updateEntity();
+    ArticleModel selectArticleModelAndTagsById(Integer id);
+    List<ArticleModel> selectArticleModelListAndTagsById();
+
 //    ArticleEs getArticleEs(Integer id);
 }

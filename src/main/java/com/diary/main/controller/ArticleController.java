@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.diary.main.es.model.ArticleEs;
 import com.diary.main.interfaces.PassToken;
 import com.diary.main.model.Article;
+import com.diary.main.model.ArticleModel;
 import com.diary.main.service.ArticleService;
 import com.diary.main.vo.ArticleVo;
 import com.diary.main.vo.ResultVo;
@@ -97,8 +98,20 @@ public class ArticleController {
 
 
 
+  @RequestMapping(value = "/findtest")
+  @PassToken
+  public ArticleModel selectArticleModelAndTagsById(Integer id){
+      ArticleModel articleModel = articleService.selectArticleModelAndTagsById(id);
+      return    articleModel;
+  }
 
 
+    @RequestMapping(value = "/findtest2")
+    @PassToken
+    public List<ArticleModel> selectArticleModelAndTagsById(){
+        List<ArticleModel> articleModel = articleService. selectArticleModelListAndTagsById();
+        return    articleModel;
+    }
 
 
 

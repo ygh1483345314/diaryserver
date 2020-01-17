@@ -7,11 +7,8 @@ import com.diary.main.enums.MsgEnum;
 import com.diary.main.es.model.ArticleEs;
 import com.diary.main.es.service.ArticleEsService;
 import com.diary.main.exception.DiaryException;
-import com.diary.main.model.Article;
+import com.diary.main.model.*;
 import com.diary.main.mapper.ArticleMapper;
-import com.diary.main.model.Tag;
-import com.diary.main.model.Type;
-import com.diary.main.model.TypeAndArticle;
 import com.diary.main.redis.ArticleKey;
 import com.diary.main.redis.BaseRedisKey;
 import com.diary.main.redis.KeyPrefix;
@@ -367,6 +364,17 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public void updateEntity() {
           articleMapper.updateEntity();
+    }
+
+    @Override
+    public ArticleModel selectArticleModelAndTagsById(Integer id) {
+        return   articleMapper.selectArticleModelAndTagsById(id);
+//        return null;
+    }
+
+    @Override
+    public List<ArticleModel> selectArticleModelListAndTagsById() {
+        return articleMapper.selectArticleModelListAndTagsById();
     }
 
 

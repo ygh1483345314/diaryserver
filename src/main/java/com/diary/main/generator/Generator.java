@@ -19,12 +19,10 @@ import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DbType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-
+import org.aspectj.lang.ProceedingJoinPoint;
 
 
 public class Generator {
-
-
     //项目路径
     private static String canonicalPath = "";
 

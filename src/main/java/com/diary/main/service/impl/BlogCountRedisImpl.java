@@ -16,6 +16,7 @@ public abstract class BlogCountRedisImpl extends BaseBlogCount {
     @Override
     public void insert(String key, String value, Integer timeout, TimeUnit timeUnit,Integer id,Integer lookCount) {
         diaryRedisCacheManager.insert(key,value,0,TimeUnit.DAYS);
+
 //        TransportClient transportClient;
 //        transportClient.prepareUpdate("twitter", "tweet", "AWQrxpiTF3aJ5qXnAM6l")
 //                .setDoc(jsonBuilder()

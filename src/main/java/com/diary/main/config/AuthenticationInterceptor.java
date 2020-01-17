@@ -6,7 +6,6 @@ import com.diary.main.exception.DiaryException;
 import com.diary.main.interfaces.PassToken;
 import com.diary.main.model.User;
 import com.diary.main.service.TokenService;
-import com.diary.main.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
