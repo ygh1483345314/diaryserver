@@ -3,6 +3,7 @@ package com.diary.main.mapper;
 import com.diary.main.model.User;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 /**

@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -85,6 +86,8 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         commentMapper.insert(comment);
     }
 
+
+
     @Override
     @CacheEvict(key = "'comment_'+#arid")
     @Transactional
@@ -109,5 +112,22 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         commentMapper.delete(wrapper);//删除所有评论
     }
 
+
+
+    public  void testEmail(int count){
+        Gson gson=new Gson();
+        for (int i = 0; i < count; i++) {
+            emailModel.setSubject("测试评论:"+i);
+            emailModel.setContent(i+"");
+            String msgStr = gson.toJson(emailModel);
+            sendEmail(msgStr);
+        }
+    }
+
+    @Async
+    public void sendEmail(String msgStr){
+        System.out.println("发送邮件"+msgStr);
+        fanoutProducerService.send(RabbitConfig.FANOUT_EMAIL_QUEUE, msgStr);
+    }
 
 }

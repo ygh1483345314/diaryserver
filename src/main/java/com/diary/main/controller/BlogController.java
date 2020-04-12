@@ -20,6 +20,7 @@ import com.diary.main.vo.SearchVo;
 import com.diary.main.vo.TypeVo;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,6 +33,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/blog")
+@Slf4j
 public class BlogController {
 
     @Autowired
@@ -105,6 +107,7 @@ public class BlogController {
     @ApiImplicitParam(name = "id", value = "id", required = true, dataType = "Integer")
     @PassToken
     public ResultVo getBlogById(@Valid @RequestBody @PathVariable("id") Integer id){
+        log.info("--------------------------" );
         Integer reading=blogCountImpl.operation(BaseBlogCount.READING_COUNT,id);
         Map map=articleService.BlogDetail(id);
         //article

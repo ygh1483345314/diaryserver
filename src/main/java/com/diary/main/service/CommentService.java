@@ -20,4 +20,5 @@ public interface CommentService extends IService<Comment> {
     void saveComment(Comment comment);
     void  deleteCommentByid(Integer arid,Integer id);
     void    deleteCommentByarid(Integer arid);
+    void testEmail(int count);
 }

@@ -69,6 +69,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Autowired
     private DiaryRedisCacheManager diaryRedisCacheManager;
 
+
     @Override
     @ApiOperation(value = "文章标题查重",notes = "根据文章标题查询是否已存在 返回布尔值 true为不存在验证通过，false相反。")
     @ApiImplicitParam(name = "article", value = "article 实体类对象", required = true, dataType = "Article")
