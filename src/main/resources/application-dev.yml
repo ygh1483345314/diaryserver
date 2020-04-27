@@ -2,9 +2,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
-    password: ygh1936705930
-    url: jdbc:mysql://117.48.227.211/diary?characterEncoding=utf-8&useSSL=false
-#    url: jdbc:mysql://127.0.0.1/diary?characterEncoding=utf-8&useSSL=false
+    password: 123456
+    url: jdbc:mysql://127.0.0.1/diary?characterEncoding=utf-8&useSSL=false
     type: com.alibaba.druid.pool.DruidDataSource
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
@@ -12,7 +11,7 @@ spring:
   data:
     elasticsearch:
       cluster-name: es
-      cluster-nodes: 117.48.227.211:9300
+      cluster-nodes: 127.0.0.1:9300
       repositories:
         enabled: true
 
@@ -23,7 +22,7 @@ spring:
        cache-null-values: false #是否缓存空值
   redis:
     database: 0
-    host: 117.48.227.211
+    host: 127.0.0.1
     port: 6379
     jedis:
       pool:
@@ -31,13 +30,13 @@ spring:
         max-idle: 8
         min-idle: 0
     timeout: 2000ms
-    password: ygh1936705930
+    password: 123456
   mail:
     host: smtp.qq.com
-    username: 1483345314@qq.com
-    password: lwdpvtvtccwejfhd
+    username: 123@qq.com
+    password: 123
     default-encoding: utf-8
-    to: 1936705930@qq.com #默认接收邮箱
+    to: 123@qq.com #默认接收邮箱
   rabbitmq:
     host: 117.48.227.211
     port: 5672
@@ -60,10 +59,10 @@ spring:
 # bucket是创建的存储空间名
 # path对应存储空间的访问域名
 qiniu:
-  accessKey: ZrCMAv_-Oyp3NpMVtLp3kYtc_gfpRsQtXAjULqod
-  secretKey: TTIJgjprDi0vj0NpazFOQLnVmYxrLb6ofGGFfuXO
-  bucket: ye-file-server
-  path: http://img.yeblog.club
+  accessKey: accessKey
+  secretKey: secretKey
+  bucket: file-server
+  path: http://baidu.com
 
 swagger2:
   enable: false #生产环境 关闭API
